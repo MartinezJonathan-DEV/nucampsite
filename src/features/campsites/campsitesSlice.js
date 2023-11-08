@@ -12,7 +12,7 @@ export const fetchCampsites = createAsyncThunk(
     }
     const data = await response.json();
     return data;
-  },
+  }
 );
 
 const initialState = {
@@ -25,20 +25,19 @@ const campsitesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchCampsites.pending, (state) => {
-      state.isLoading = true;
-    });
-
-    builder.addCase(fetchCampsites.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.errMsg = "";
-      state.campsitesArray = mapImageURL(action.payload);
-    });
-
-    builder.addCase(fetchCampsites.rejected, (state, action) => {
-      state.isLoading = false;
-      state.errMsg = action.error ? action.error.message : "failed fetch";
-    });
+    builder
+      .addCase(fetchCampsites.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchCampsites.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.errMsg = "";
+        state.campsitesArray = mapImageURL(action.payload);
+      })
+      .addCase(fetchCampsites.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errMsg = action.error ? action.error.message : "Failed to fetch";
+      });
   },
 });
 
@@ -54,14 +53,14 @@ export const selectAllCampsites = (state) => {
 
 export const selectCampsiteById = (id) => (state) => {
   return state.campsites.campsitesArray.find(
-    (campsite) => campsite.id === parseInt(id),
+    (campsite) => campsite.id === parseInt(id)
   );
 };
 
 export const selectFeaturedCampsite = (state) => {
   return {
     featuredItem: state.campsites.campsitesArray.find(
-      (campsite) => campsite.featured,
+      (campsite) => campsite.featured
     ),
     isLoading: state.campsites.isLoading,
     errMsg: state.campsites.errMsg,

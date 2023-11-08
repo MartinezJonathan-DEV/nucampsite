@@ -12,7 +12,7 @@ export const fetchPromotions = createAsyncThunk(
     }
     const data = await response.json();
     return data;
-  },
+  }
 );
 
 const initialState = {
@@ -26,20 +26,19 @@ const promotionsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchPromotions.pending, (state) => {
-      state.isLoading = true;
-    });
-
-    builder.addCase(fetchPromotions.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.errMsg = "";
-      state.promotionsArray = mapImageURL(action.payload);
-    });
-
-    builder.addCase(fetchPromotions.rejected, (state, action) => {
-      state.isLoading = false;
-      state.errMsg = action.error ? action.error.message : "failed fetch";
-    });
+    builder
+      .addCase(fetchPromotions.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchPromotions.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.errMsg = "";
+        state.promotionsArray = mapImageURL(action.payload);
+      })
+      .addCase(fetchPromotions.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errMsg = action.error ? action.error.message : "Failed to fetch";
+      });
   },
 });
 
@@ -48,7 +47,7 @@ export const promotionsReducer = promotionsSlice.reducer;
 export const selectFeaturedPromotion = (state) => {
   return {
     featuredItem: state.promotions.promotionsArray.find(
-      (promotion) => promotion.featured,
+      (promotion) => promotion.featured
     ),
     isLoading: state.promotions.isLoading,
     errMsg: state.promotions.errMsg,

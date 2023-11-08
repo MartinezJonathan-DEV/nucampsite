@@ -12,7 +12,7 @@ export const fetchPartners = createAsyncThunk(
     }
     const data = await response.json();
     return data;
-  },
+  }
 );
 
 const initialState = {
@@ -26,20 +26,19 @@ const partnersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchPartners.pending, (state) => {
-      state.isLoading = true;
-    });
-
-    builder.addCase(fetchPartners.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.errMsg = "";
-      state.parternsArray = mapImageURL(action.payload);
-    });
-
-    builder.addCase(fetchPartners.rejected, (state, action) => {
-      state.isLoading = false;
-      state.errMsg = action.error ? action.error.message : "failed fetch";
-    });
+    builder
+      .addCase(fetchPartners.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchPartners.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.errMsg = "";
+        state.parternsArray = mapImageURL(action.payload);
+      })
+      .addCase(fetchPartners.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errMsg = action.error ? action.error.message : "Failed to fetch";
+      });
   },
 });
 
@@ -52,7 +51,7 @@ export const selectAllPartners = (state) => {
 export const selectFeaturedPartner = (state) => {
   return {
     featuredItem: state.partners.parternsArray.find(
-      (partner) => partner.featured,
+      (partner) => partner.featured
     ),
     isLoading: state.partners.isLoading,
     errMsg: state.partners.errMsg,
