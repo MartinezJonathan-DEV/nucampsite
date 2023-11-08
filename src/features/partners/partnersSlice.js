@@ -12,7 +12,7 @@ export const fetchPartners = createAsyncThunk(
     }
     const data = await response.json();
     return data;
-  }
+  },
 );
 
 const initialState = {
@@ -52,7 +52,7 @@ export const selectAllPartners = (state) => {
 export const selectFeaturedPartner = (state) => {
   return {
     featuredItem: state.partners.parternsArray.find(
-      (partner) => partner.featured
+      (partner) => partner.featured,
     ),
     isLoading: state.partners.isLoading,
     errMsg: state.partners.errMsg,

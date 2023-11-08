@@ -12,7 +12,7 @@ export const fetchPromotions = createAsyncThunk(
     }
     const data = await response.json();
     return data;
-  }
+  },
 );
 
 const initialState = {
@@ -48,7 +48,7 @@ export const promotionsReducer = promotionsSlice.reducer;
 export const selectFeaturedPromotion = (state) => {
   return {
     featuredItem: state.promotions.promotionsArray.find(
-      (promotion) => promotion.featured
+      (promotion) => promotion.featured,
     ),
     isLoading: state.promotions.isLoading,
     errMsg: state.promotions.errMsg,
