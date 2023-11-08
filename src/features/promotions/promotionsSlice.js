@@ -25,19 +25,21 @@ const promotionsSlice = createSlice({
   name: "promotions",
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchPromotions.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchPromotions.pending, (state) => {
       state.isLoading = true;
-    },
-    [fetchPromotions.fulfilled]: (state, action) => {
+    });
+
+    builder.addCase(fetchPromotions.fulfilled, (state, action) => {
       state.isLoading = false;
       state.errMsg = "";
       state.promotionsArray = mapImageURL(action.payload);
-    },
-    [fetchPromotions.rejected]: (state, action) => {
+    });
+
+    builder.addCase(fetchPromotions.rejected, (state, action) => {
       state.isLoading = false;
-      state.errMsg = action.errMsg ? action.errMsg.message : "Failed fetch";
-    },
+      state.errMsg = action.error ? action.error.message : "failed fetch";
+    });
   },
 });
 

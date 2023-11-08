@@ -25,18 +25,21 @@ const partnersSlice = createSlice({
   name: "partners",
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchPartners.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchPartners.pending, (state) => {
       state.isLoading = true;
-    },
-    [fetchPartners.fulfilled]: (state, action) => {
+    });
+
+    builder.addCase(fetchPartners.fulfilled, (state, action) => {
       state.isLoading = false;
+      state.errMsg = "";
       state.parternsArray = mapImageURL(action.payload);
-    },
-    [fetchPartners.rejected]: (state, action) => {
+    });
+
+    builder.addCase(fetchPartners.rejected, (state, action) => {
       state.isLoading = false;
-      state.errMsg = action.errMsg ? action.errMsg.message : "Fetch failed";
-    },
+      state.errMsg = action.error ? action.error.message : "failed fetch";
+    });
   },
 });
 
